@@ -1,0 +1,8 @@
+spec/reports
+host.json
+launch.html
+.conjurrc
+policy.json
+policy-*.json
+.conjurenv
+log
