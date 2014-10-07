@@ -15,7 +15,7 @@ module Command
         mkdir_p File.expand_path("~/.ssh")
         fname = File.expand_path("~/.ssh/known_hosts")
         
-        if `ssh-keygen -F #{host}`.empty?
+        if `ssh-keygen -F #{host} -f #{fname}`.empty?
           existing = begin
             File.read(fname)
           rescue Errno::ENOENT
@@ -32,13 +32,14 @@ module Command
       
       def execute
         ssh_dir = File.expand_path("~/.ssh")
-        private_key = File.expand_path("~/.ssh/id_rsa_conjur_ops")
+        private_key = File.expand_path("~/.ssh/id_rsa")
         
         unless File.exists?(private_key)
           mkdir_p ssh_dir
           File.write private_key, Secrets.github_conjur_ops_private_key
           chmod 0600, private_key
         end
+
         nil
       end
     end

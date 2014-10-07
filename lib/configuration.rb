@@ -1,5 +1,15 @@
 class Configuration
   class << self
+    def validate!
+      require 'pathname'
+      homedir = File.absolute_path("~")
+      if File.directory?(File.join(homedir, ".ssh"))
+        if %w(home Users).member?(Pathname.new(homedir).parent.basename.to_s)
+          raise "Your HOME directory is #{homedir}, and I'm afraid to clobber your .ssh dir. Set HOME to something else!"
+        end
+      end
+    end
+    
     def policy_id
       ENV['CONJUR_POLICY_ID'] or raise "No CONJUR_POLICY_ID"
     end
