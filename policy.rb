@@ -13,8 +13,6 @@ policy "release-bot-1.0" do
     permit "delete", gem_managers
   end
   
-  secrets = YAML.load(File.read('app.secrets'))
-  
   layer "service" do
     Secrets.variable_ids.each do |var|
       can "execute", variable([ "", var ].join('/'))
