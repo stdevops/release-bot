@@ -44,7 +44,7 @@ class WS < ::Sinatra::Base
       "gem_name" => "name",
       "repo" => repo,
       "client" => conjur_client_api.current_role.roleid,
-      "resources" => [ Configuration.service_resourceid ],
+      "resources" => [ Configuration.service_resourceid("rubygems") ],
       "roles" => [ conjur_client_api.current_role.roleid ],
       "remote_ip" => request.ip
     })
@@ -72,7 +72,7 @@ class WS < ::Sinatra::Base
       "repo" => repo,
       "gem_version" => "version",
       "client" => conjur_client_api.current_role.roleid,
-      "resources" => [ Configuration.service_resourceid ],
+      "resources" => [ Configuration.service_resourceid("rubygems") ],
       "roles" => [ conjur_client_api.current_role.roleid ],
       "remote_ip" => request.ip
     })
