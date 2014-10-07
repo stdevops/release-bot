@@ -33,13 +33,14 @@ module Command
       
       def execute
         ssh_dir = File.expand_path("~/.ssh")
-        private_key = File.expand_path("~/.ssh/id_rsa")
+        key_file = File.expand_path("~/.ssh/id_rsa")
+        key = Secrets.github_conjur_ops_private_key
         
-        unless File.exists?(private_key)
-          $stderr.puts "Writing private key file #{private_key}"
+        if !File.exists?(key_file) || File.read(key_file) != key
+          $stderr.puts "Writing private key file #{key_file}"
           mkdir_p ssh_dir
-          File.write private_key, Secrets.github_conjur_ops_private_key
-          chmod 0600, private_key
+          File.write key_file, key
+          chmod 0600, key_file
         end
 
         nil

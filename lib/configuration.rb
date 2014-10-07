@@ -3,7 +3,8 @@ class Configuration
     # Verify that the settings are ok.
     def validate!
       require 'pathname'
-      homedir = File.absolute_path("~")
+      homedir = File.absolute_path(ENV['HOME'])
+      
       if File.directory?(File.join(homedir, ".ssh"))
         if %w(home Users).member?(Pathname.new(homedir).parent.basename.to_s)
           raise "Your HOME directory is #{homedir}, and I'm afraid to clobber your .ssh dir. Set HOME to something else!"

@@ -3,8 +3,10 @@ module Command
     class Authenticate < Base
       include FileUtils
       
-      attr_reader :api_key
+      attr_reader :api_key, :force
       
+      # Options:
+      # +force+
       def initialize(api_key)
         @api_key = api_key
       end
@@ -12,11 +14,9 @@ module Command
       def execute
         gemdir = File.expand_path("~/.gem")
         credentials_file = File.join(gemdir, "credentials")
-        unless File.exists?(credentials_file)
-          $stderr.puts "Writing gem credentials to #{credentials_file}"
-          mkdir_p gemdir
-          File.write(credentials_file, YAML.dump({:rubygems_api_key=>api_key}))
-        end
+        $stderr.puts "Writing gem credentials to #{credentials_file}"
+        mkdir_p gemdir
+        File.write(credentials_file, YAML.dump({:rubygems_api_key=>api_key}))
       end
     end
     

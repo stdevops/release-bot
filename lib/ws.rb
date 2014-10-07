@@ -37,6 +37,17 @@ class WS < ::Sinatra::Base
     repo = "git@github.com:#{repo}.git"
     Command::Rake::Release.new(repo).perform
 
+    Configuration.service_api.audit_send params.merge({
+      "facility" => "releasebot",
+      "action" => "release",
+      "gem_name" => "name",
+      "repo" => repo,
+      "client" => conjur_client_api.current_role.roleid,
+      "resources" => [ Configuration.service_resourceid ],
+      "roles" => [ conjur_client_api.current_role.roleid ],
+      "remote_ip" => request.ip
+    })
+
     status 201
   end
   
@@ -53,6 +64,18 @@ class WS < ::Sinatra::Base
     repo = "git@github.com:#{repo}.git"
     Command::Rubygems::Yank.new(repo, version).perform
 
+    Configuration.service_api.audit_send params.merge({
+      "facility" => "releasebot",
+      "action" => "yank",
+      "gem_name" => "name",
+      "repo" => repo,
+      "gem_version" => "version",
+      "client" => conjur_client_api.current_role.roleid,
+      "resources" => [ Configuration.service_resourceid ],
+      "roles" => [ conjur_client_api.current_role.roleid ],
+      "remote_ip" => request.ip
+    })
+    
     status 200
   end
 
