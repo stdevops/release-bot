@@ -41,7 +41,7 @@ class WS < ::Sinatra::Base
     Configuration.service_api.audit_send params.merge({
       "facility" => "releasebot",
       "action" => "release",
-      "gem_name" => "name",
+      "gem_name" => name,
       "repo" => repo,
       "client" => conjur_client_api.current_role.roleid,
       "resources" => [ Configuration.service_resourceid("rubygems") ],
@@ -68,9 +68,9 @@ class WS < ::Sinatra::Base
     Configuration.service_api.audit_send params.merge({
       "facility" => "releasebot",
       "action" => "yank",
-      "gem_name" => "name",
+      "gem_name" => name,
       "repo" => repo,
-      "gem_version" => "version",
+      "gem_version" => version,
       "client" => conjur_client_api.current_role.roleid,
       "resources" => [ Configuration.service_resourceid("rubygems") ],
       "roles" => [ conjur_client_api.current_role.roleid ],
