@@ -8,6 +8,7 @@ gem 'sinatra'
 gem 'conjur-cli', github: 'conjurinc/cli-ruby',  branch: 'master'
 gem 'conjur-asset-audit-send', github: 'conjurinc/conjur-asset-audit-send', branch: 'master'
 gem 'yard'
+gem 'net-ssh'
 
 group :test, :development do
   gem 'rspec', '>= 2.14', '< 3.0'
