@@ -5,6 +5,8 @@ ENV['CONJUR_ENV'] ||= 'production'
 
 require 'releasebot'
 
+Configuration.initialize!
+
 require 'ws'
 
 run WS
