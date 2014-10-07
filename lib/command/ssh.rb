@@ -12,6 +12,7 @@ module Command
       
       def execute
         known_hosts = []
+        mkdir_p File.expand_path("~/.ssh")
         fname = File.expand_path("~/.ssh/known_hosts")
         if File.exists?(fname)
           known_hosts = File.read(fname).split("\n")
