@@ -14,12 +14,14 @@ module Command
         known_hosts = []
         mkdir_p File.expand_path("~/.ssh")
         fname = File.expand_path("~/.ssh/known_hosts")
-        if File.exists?(fname)
-          known_hosts = File.read(fname).split("\n")
-        end
-        unless known_hosts.find{|l| l =~ %r(^#{host}\s)}
-          known_hosts << [ host, key ].join(" ")
-          File.write fname, known_hosts.join("\n")
+        
+        if `ssh-keygen -F #{host}`.empty?
+          existing = begin
+            File.read(fname)
+          rescue Errno::ENOENT
+            nil
+          end
+          File.write fname, [ existing, [ host, key ].join(" "), "" ].compact.join("\n")
         end
         nil
       end
