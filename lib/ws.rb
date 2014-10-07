@@ -30,15 +30,12 @@ class WS < ::Sinatra::Base
   #
   # +name+ gem name, which must be found in GEM_REPOS whitelist
   post '/rubygems/releases' do
-    require 'releasebot/gem_commands'
-
     authorize! "rubygems", :create
 
-    name = param! :name
+    name = param!(:name)
     repo = GEM_REPOS[name] or halt 500, "Gem #{name} not found"
     repo = "git@github.com:#{repo}.git"
-    require 'releasebot/gem_commands'
-    ReleaseBot::GemCommands.release repo
+    Command::Rake::Release.new(repo).perform
 
     status 201
   end
@@ -48,16 +45,13 @@ class WS < ::Sinatra::Base
   #
   # In addition to the gem name, a +version+ parameter is required.
   delete '/rubygems/releases/:name' do
-    require 'releasebot/gem_commands'
-    
     authorize! "rubygems", :delete
 
-    name = params.name
+    name = params[:name]
     version = param! :version
     repo = GEM_REPOS[name] or halt 500, "Gem #{name} not found"
     repo = "git@github.com:#{repo}.git"
-    require 'releasebot/gem_commands'
-    ReleaseBot::GemCommands.yank repo, version
+    Command::Gems::Yank.new(repo, version).perform
 
     status 200
   end

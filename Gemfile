@@ -7,7 +7,6 @@ gem 'activesupport'
 gem 'sinatra'
 gem 'conjur-cli', github: 'conjurinc/cli-ruby',  branch: 'master'
 gem 'conjur-asset-audit-send', github: 'conjurinc/conjur-asset-audit-send', branch: 'master'
-gem 'mail'
 gem 'yard'
 
 group :test, :development do

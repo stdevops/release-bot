@@ -3,9 +3,7 @@ $LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'lib')
 
 ENV['CONJUR_ENV'] ||= 'production'
 
-require 'conjur/cli'
-Conjur::Config.load
-Conjur::Config.apply
+require 'releasebot'
 
 require 'ws'
 

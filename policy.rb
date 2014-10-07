@@ -1,3 +1,6 @@
+$LOAD_PATH.unshift 'lib'
+require 'releasebot'
+
 policy "release-bot-1.0" do
   
   gem_managers   = role "client", "gem-managers"
@@ -10,9 +13,11 @@ policy "release-bot-1.0" do
     permit "delete", gem_managers
   end
   
+  secrets = YAML.load(File.read('app.secrets'))
+  
   layer "service" do
-    [ "/rubygems.org/robot@conjur.net/api-key", "/github.com/conjur-ops/private-key" ].each do |var|
-      can "execute", variable(var)
+    Secrets.variable_ids.each do |var|
+      can "execute", variable([ "", var ].join('/'))
     end
   end
 end

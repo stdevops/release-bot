@@ -16,25 +16,6 @@ class Configuration
       ENV['CONJUR_AUTHN_API_KEY'] or raise "No CONJUR_AUTHN_API_KEY"
     end
     
-    def rubygems_robot_api_key
-      variable_value(variable_ids[:rubygems_robot_api_key])
-    end
-    
-    def github_conjur_ops_private_key
-      variable_value(variable_ids[:github_conjur_ops_private_key])
-    end
-    
-    def variable_value variableid
-      service_api.variable(variableid).value
-    end
-    
-    def variable_ids
-      {
-        rubygems_robot_api_key: "rubygems.org/robot@conjur.net/api-key",
-        github_conjur_ops_private_key: "github.com/conjur-ops/private-key"
-      }
-    end
-
     def service_api
       require 'conjur/api'
 

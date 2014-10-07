@@ -95,8 +95,6 @@ GEM
       rspec (>= 2.0, < 4.0)
     launchy (2.4.2)
       addressable (~> 2.3)
-    mail (2.6.1)
-      mime-types (>= 1.16, < 3)
     methadone (1.7.0)
       bundler
     method_source (0.8.2)
@@ -183,7 +181,6 @@ DEPENDENCIES
   cucumber
   cucumber-sinatra
   json_spec
-  mail
   pry
   rack-test
   rake
