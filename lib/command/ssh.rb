@@ -16,6 +16,7 @@ module Command
         fname = File.expand_path("~/.ssh/known_hosts")
         
         if `ssh-keygen -F #{host} -f #{fname}`.empty?
+          $stderr.puts "Adding #{host} to #{fname}"
           existing = begin
             File.read(fname)
           rescue Errno::ENOENT
@@ -35,6 +36,7 @@ module Command
         private_key = File.expand_path("~/.ssh/id_rsa")
         
         unless File.exists?(private_key)
+          $stderr.puts "Writing private key file #{private_key}"
           mkdir_p ssh_dir
           File.write private_key, Secrets.github_conjur_ops_private_key
           chmod 0600, private_key
