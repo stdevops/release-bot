@@ -29,6 +29,18 @@ Access to ReleaseBot is given by granting specific roles:
 
 Jenkins is a `gem-publisher` and may get additional permissions in the future.
 
+# Audit
+
+All operations are recorded as Conjur audit events.
+
+For example:
+
+```
+$ conjur audit resource -s webservice:production/release-bot-1.0/rubygems
+[2014-10-07 15:27:15 UTC] conjurops:user:kgilpin checked that they can create conjurops:webservice:production/release-bot-1.0/rubygems (true)
+[2014-10-07 15:27:25 UTC] conjurops:host:heroku/releasebot-conjur reported releasebot:release
+```
+
 # Usage
 
 ## Publish a gem release
