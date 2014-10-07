@@ -28,3 +28,21 @@ Access to ReleaseBot is given by granting specific roles:
 * **[policy]/gem-publishers** publish gems
 
 Jenkins is a `gem-publisher` and may get additional permissions in the future.
+
+# Usage
+
+## Publish a gem release
+
+```
+$ curl -H "`conjur authn authenticate -H`" -X POST \
+  "https://releasebot-conjur.herokuapp.com/rubygems/releases" \
+  --data "name=conjur-api"
+```
+
+## Yank a gem release
+
+```
+$ curl -H "`conjur authn authenticate -H`" -X DELETE \
+  "https://releasebot-conjur.herokuapp.com/rubygems/releases/conjur-api?version=10.0.0"
+```
+
