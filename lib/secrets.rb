@@ -40,7 +40,7 @@ module Secrets
       env_keys = []
       variable_ids = []
       definition.each do |k,v|
-        env_keys << k if v.is_a?(Conjur::Env::ConjurVariable)
+        env_keys << k
         variable_ids << v.conjur_id if v.respond_to?(:conjur_id)
       end
       @env_keys = env_keys

@@ -34,7 +34,7 @@ module Command
       def execute
         ssh_dir = File.expand_path("~/.ssh")
         key_file = File.expand_path("~/.ssh/id_rsa")
-        key = Secrets.github_conjur_ops_private_key
+        key = Secrets.ssh_private_key
         
         if !File.exists?(key_file) || File.read(key_file) != key
           $stderr.puts "Writing private key file #{key_file}"

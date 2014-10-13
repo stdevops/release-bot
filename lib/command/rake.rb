@@ -3,19 +3,20 @@ module Command
     class Release < Base
       include FileUtils
       
-      attr_reader :repo
+      attr_reader :repo, :dir
       
-      depends :clone, Git::Clone, :repo
+      depends :clone, Git::Clone, :repo, lambda {|result|
+        @dir = result[2]
+      }
+      depends :authenticate, Rubygems::Authenticate
+      depends :git_config, Git::Config, :dir
       
       def initialize(repo)
         @repo = repo
       end
       
       def execute
-        repo, gem, dir = prerequistes[:clone]
         cd dir do
-          sh "git config user.email robot@conjur.net"
-          sh "git config user.name  \"Conjur Releasebot\""
           sh "rake release"
         end
         nil

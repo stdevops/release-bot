@@ -3,20 +3,14 @@ module Command
     class Authenticate < Base
       include FileUtils
       
-      attr_reader :api_key, :force
-      
-      # Options:
-      # +force+
-      def initialize(api_key)
-        @api_key = api_key
-      end
-      
       def execute
+        require 'fileutils'
         gemdir = File.expand_path("~/.gem")
         credentials_file = File.join(gemdir, "credentials")
         $stderr.puts "Writing gem credentials to #{credentials_file}"
         mkdir_p gemdir
-        File.write(credentials_file, YAML.dump({:rubygems_api_key=>api_key}))
+        File.write(credentials_file, YAML.dump({:rubygems_api_key=>Secrets.rubygems_api_key}))
+        FileUtils.chmod 0600, credentials_file
       end
     end
     
@@ -26,6 +20,7 @@ module Command
       attr_reader :repo, :version
       
       depends :clone, Git::Clone, :repo
+      depends :authenticate, Authenticate
       
       def initialize(repo, version)
         @repo = repo
@@ -33,7 +28,7 @@ module Command
       end
       
       def execute
-        repo, gem, _ = prerequistes[:clone]
+        _, gem, _ = prerequistes[:clone]
     
         sh "gem yank #{gem} -v #{version}"
       end

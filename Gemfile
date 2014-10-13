@@ -10,6 +10,8 @@ gem 'conjur-asset-audit-send', github: 'conjurinc/conjur-asset-audit-send', bran
 gem 'yard'
 gem 'net-ssh'
 gem 'thin'
+gem 'netrc'
+gem 'heroku'
 
 group :test, :development do
   gem 'rspec', '>= 2.14', '< 3.0'

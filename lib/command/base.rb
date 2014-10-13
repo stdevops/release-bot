@@ -27,8 +27,11 @@ module Command
     def prepare
       self.class.dependencies.each do |d|
         key, cls, attributes = d
-        arguments = attributes.map{|a| send(a)}
+        attributes = attributes.clone
+        callback = attributes.pop if attributes.last.is_a?(Proc)
+        arguments = attributes.map{|a| send(a) }
         result = cls.new(*arguments).perform
+        instance_exec(result, &callback) if callback
         @prerequistes[key] = result if result
       end
     end

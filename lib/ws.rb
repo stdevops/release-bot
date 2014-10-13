@@ -7,7 +7,6 @@ class WS < ::Sinatra::Base
 
   enable :dump_errors, :raise_errors
   
-  
   helpers do
     def authorize! service, privilege
       conjur_client_api.current_role.permitted?(Configuration.service_resourceid(service), privilege) or halt(403, "Unauthorized")
@@ -23,6 +22,12 @@ class WS < ::Sinatra::Base
     "conjur-asset-proxy" => "conjurinc/conjur-asset-proxy",
     "slosilo" => "conjurinc/slosilo"
   }
+  
+  HEROKU_REPOS = [
+    Command::Heroku::App.new("developer-www-ci-conjur", "git@github.com:conjurinc/developer-www.git", "rails", "deploy.sh"),
+    Command::Heroku::App.new("developer-www-conjur", "git@github.com:conjurinc/developer-www.git", "rails", "deploy.sh"),
+    Command::Heroku::App.new("trial-factory-conjur", "git@github.com:conjurinc/trial-factory.git")
+  ].inject({}){|memo,app| memo[app.name] = app; memo}
   
   # Release a gem.
   # +create+ permission is required on 'rubygems'.
@@ -78,6 +83,33 @@ class WS < ::Sinatra::Base
     })
     
     status 200
+  end
+  
+  # Release to Heroku.
+  # +create+ permission is required on 'heroku'.
+  #
+  # Request parameters:
+  #
+  # +name+ gem name, which must be found in GEM_REPOS whitelist
+  post '/heroku/releases' do
+    authorize! "heroku", :create
+  
+    name = param!(:name)
+    app = HEROKU_REPOS[name] or halt 500, "Heroku app #{name} not found"
+    Command::Heroku::Release.new(app).perform
+  
+    Configuration.service_api.audit_send params.merge({
+      "facility" => "releasebot",
+      "action" => "release",
+      "app_name" => app.name,
+      "repo" => app.repo,
+      "client" => conjur_client_api.current_role.roleid,
+      "resources" => [ Configuration.service_resourceid("heroku") ],
+      "roles" => [ conjur_client_api.current_role.roleid ],
+      "remote_ip" => request.ip
+    })
+  
+    status 201
   end
 
   # start the server if ruby file executed directly
