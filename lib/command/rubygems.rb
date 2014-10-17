@@ -19,8 +19,8 @@ module Command
       
       attr_reader :repo, :version
       
-      depends :clone, Git::Clone, :repo
-      depends :authenticate, Authenticate
+      depends Git::Clone, :repo
+      depends Authenticate
       
       def initialize(repo, version)
         @repo = repo
@@ -28,7 +28,7 @@ module Command
       end
       
       def execute
-        _, gem, _ = prerequistes[:clone]
+        _, gem, _ = prerequistes[Git::Clone]
     
         sh "gem yank #{gem} -v #{version}"
       end

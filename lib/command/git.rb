@@ -5,7 +5,7 @@ module Command
       
       attr_reader :repo
       
-      depends :authenticate, SSH::Authenticate
+      depends SSH::Authenticate
       
       def initialize(repo)
         @repo = repo

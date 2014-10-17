@@ -9,16 +9,12 @@ gem 'conjur-cli', github: 'conjurinc/cli-ruby',  branch: 'master'
 gem 'conjur-asset-audit-send', github: 'conjurinc/conjur-asset-audit-send', branch: 'master'
 gem 'yard'
 gem 'net-ssh'
-gem 'thin'
+gem 'puma'
 gem 'netrc'
 gem 'heroku'
 
 group :test, :development do
-  gem 'rspec', '>= 2.14', '< 3.0'
-  gem 'cucumber'
-  gem 'capybara'
-  gem 'json_spec'
-  gem 'cucumber-sinatra'
+  gem 'rspec'
   gem "rack-test", require: "rack/test"
   gem 'ci_reporter_rspec'
   gem 'webmock'

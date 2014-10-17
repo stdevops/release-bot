@@ -7,7 +7,14 @@ module Command
     class << self
       def dependencies; @dependencies ||= []; end
       
-      def depends key, cls, *attributes
+      def depends key, *attributes
+        if key.is_a?(Class)
+          cls = key
+        elsif key.is_a?(Symbol)
+          cls = attributes.shift
+        else
+          raise "Unexpected argument type #{key.class}"
+        end
         dependencies << [ key, cls, attributes ]
       end
     end

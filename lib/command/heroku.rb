@@ -19,11 +19,11 @@ module Command
       
       attr_reader :app, :dir, :repo
       
-      depends :clone, Git::Clone, :repo, lambda {|result|
+      depends Git::Clone, :repo, lambda {|result|
         @dir = result[2]
       }
-      depends :login, Login
-      depends :git_config, Git::Config, :dir
+      depends Login
+      depends Git::Config, :dir
       
       def initialize(app)
         @app = app
@@ -31,7 +31,7 @@ module Command
       end
       
       def execute
-        repo, gem, dir = prerequistes[:clone]
+        repo, gem, dir = prerequistes[Git::Clone]
         cd dir do
           sh "git remote add heroku git@heroku.com:#{app.name}.git"
           sh "git push heroku refs/heads/#{app.branch}:master"
