@@ -24,7 +24,6 @@ class WS < ::Sinatra::Base
   }
   
   HEROKU_REPOS = [
-    Command::Heroku::App.new("developer-www-ci-conjur", "git@github.com:conjurinc/developer-www.git", "rails", "deploy.sh"),
     Command::Heroku::App.new("developer-www-conjur", "git@github.com:conjurinc/developer-www.git", "rails", "deploy.sh"),
     Command::Heroku::App.new("trial-factory-conjur", "git@github.com:conjurinc/trial-factory.git")
   ].inject({}){|memo,app| memo[app.name] = app; memo}
