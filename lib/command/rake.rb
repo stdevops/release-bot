@@ -5,11 +5,11 @@ module Command
       
       attr_reader :repo, :dir
       
-      depends :clone, Git::Clone, :repo, lambda {|result|
+      depends Git::Clone, :repo, lambda {|result|
         @dir = result[2]
       }
-      depends :authenticate, Rubygems::Authenticate
-      depends :git_config, Git::Config, :dir
+      depends Rubygems::Authenticate
+      depends Git::Config, :dir
       
       def initialize(repo)
         @repo = repo
@@ -17,7 +17,14 @@ module Command
       
       def execute
         cd dir do
-          sh "rake release"
+          File.write('release.rb', <<-SCRIPT)
+require 'rake'
+require 'bundler/gem_helper'
+helper = Bundler::GemHelper.new
+helper.install
+Rake::Task['release'].invoke
+          SCRIPT
+          sh "ruby release.rb"
         end
         nil
       end
