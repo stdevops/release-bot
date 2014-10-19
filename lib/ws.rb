@@ -23,11 +23,6 @@ class WS < ::Sinatra::Base
     "slosilo" => "conjurinc/slosilo"
   }
   
-  HEROKU_REPOS = [
-    Command::Heroku::App.new("developer-www-conjur", "git@github.com:conjurinc/developer-www.git", "rails", "deploy.sh"),
-    Command::Heroku::App.new("trial-factory-conjur", "git@github.com:conjurinc/trial-factory.git")
-  ].inject({}){|memo,app| memo[app.name] = app; memo}
-  
   # Release a gem.
   # +create+ permission is required on 'rubygems'.
   #
@@ -44,7 +39,7 @@ class WS < ::Sinatra::Base
 
     Configuration.service_api.audit_send params.merge({
       "facility" => "releasebot",
-      "action" => "release",
+      "action" => "rake/release",
       "gem_name" => name,
       "repo" => repo,
       "client" => conjur_client_api.current_role.roleid,
@@ -71,7 +66,7 @@ class WS < ::Sinatra::Base
 
     Configuration.service_api.audit_send params.merge({
       "facility" => "releasebot",
-      "action" => "yank",
+      "action" => "rubygems/yank",
       "gem_name" => name,
       "repo" => repo,
       "gem_version" => version,
@@ -92,21 +87,13 @@ class WS < ::Sinatra::Base
   # +name+ gem name, which must be found in GEM_REPOS whitelist
   post '/heroku/releases' do
     authorize! "heroku", :create
+    
+    require 'sqs/job/message/heroku_release'
   
     name = param!(:name)
-    app = HEROKU_REPOS[name] or halt 500, "Heroku app #{name} not found"
-    Command::Heroku::Release.new(app).perform
-  
-    Configuration.service_api.audit_send params.merge({
-      "facility" => "releasebot",
-      "action" => "release",
-      "app_name" => app.name,
-      "repo" => app.repo,
-      "client" => conjur_client_api.current_role.roleid,
-      "resources" => [ Configuration.service_resourceid("heroku") ],
-      "roles" => [ conjur_client_api.current_role.roleid ],
-      "remote_ip" => request.ip
-    })
+    halt 500, "Heroku app #{name} not found" unless SQS::Job::Message::HerokuRelease::HEROKU_REPOS[name]
+    
+    SQS::Job.send_message Configuration.job_queue, 'heroku_release', { name: name }
   
     status 201
   end

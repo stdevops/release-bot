@@ -36,6 +36,16 @@ module Command
         key_file = File.expand_path("~/.ssh/id_rsa")
         key = Secrets.ssh_private_key
         
+        require 'pathname'
+        homedir = File.absolute_path(ENV['HOME'])
+        
+        if File.directory?(File.join(homedir, ".ssh"))
+          if %w(home Users).member?(Pathname.new(homedir).parent.basename.to_s)
+            $stderr.puts "Your HOME directory is #{homedir}, and I'm afraid to clobber your .ssh dir. Set HOME to something else!"
+            return
+          end
+        end
+        
         if !File.exists?(key_file) || File.read(key_file) != key
           $stderr.puts "Writing private key file #{key_file}"
           mkdir_p ssh_dir
