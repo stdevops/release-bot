@@ -3,7 +3,7 @@ require 'releasebot'
 
 policy "release-bot-1.1" do
   
-  create_signing_key_variables 'jobs'
+  public_key, private_key = create_signing_key_variables 'jobs'
 
   aws_credentials = [ 
     variable("aws/access_key_id"), 
@@ -30,6 +30,7 @@ policy "release-bot-1.1" do
     Secrets.variable_ids.each do |var|
       can "execute", variable([ "", var ].join('/'))
     end
+    can "read", private_key
     can_submit_job  'jobs', aws_credentials
     can_process_job 'jobs', aws_credentials
   end
