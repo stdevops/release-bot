@@ -5,9 +5,10 @@ module SQS::Job::Message
       Command::Heroku::App.new("trial-factory-conjur", "git@github.com:conjurinc/trial-factory.git")
     ].inject({}){|memo,app| memo[app.name] = app; memo}
     
-    validates_presence_of :name
+    validates_presence_of :name, :client_roleid
     
     def name; params[:name]; end
+    def client_roleid; params[:client_roleid]; end
     
     def invoke!
       app = HEROKU_REPOS[name] or raise "Heroku app #{name} not found"
@@ -18,9 +19,9 @@ module SQS::Job::Message
         "action" => "release",
         "app_name" => app.name,
         "repo" => app.repo,
-        "client" => conjur_client_api.current_role.roleid,
+        "client" => client_roleid,
         "resources" => [ Configuration.service_resourceid("heroku") ],
-        "roles" => [ conjur_client_api.current_role.roleid ],
+        "roles" => [ client_roleid ],
         "remote_ip" => request.ip
       })
     end

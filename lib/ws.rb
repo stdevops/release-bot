@@ -93,7 +93,7 @@ class WS < ::Sinatra::Base
     name = param!(:name)
     halt 500, "Heroku app #{name} not found" unless SQS::Job::Message::HerokuRelease::HEROKU_REPOS[name]
     
-    SQS::Job.send_message Configuration.job_queue, 'heroku_release', { name: name }
+    SQS::Job.send_message Configuration.job_queue, 'heroku_release', { name: name, client_roleid: conjur_client_api.current_role.roleid }
   
     status 201
   end
