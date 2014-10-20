@@ -30,6 +30,16 @@ module Command
     end
     
     protected
+
+    def dont_clobber file, &block
+      require 'pathname'
+      homedir = File.absolute_path(ENV['HOME'])
+      if File.exists?(file) && %w(home Users).member?(Pathname.new(homedir).parent.basename.to_s)
+        $stderr.puts "Your HOME directory is #{homedir}, and I'm afraid to clobber #{file}. Set HOME to something else!"
+      else
+        yield
+      end
+    end
     
     def prepare
       self.class.dependencies.each do |d|
