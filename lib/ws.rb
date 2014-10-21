@@ -20,7 +20,8 @@ class WS < ::Sinatra::Base
     "conjur-asset-audit-send" => "conjurinc/conjur-asset-audit-send",
     "conjur-asset-host-factory" => "conjurinc/conjur-asset-host-factory",
     "conjur-asset-proxy" => "conjurinc/conjur-asset-proxy",
-    "slosilo" => "conjurinc/slosilo"
+    "slosilo" => "conjurinc/slosilo",
+    "conjur-rack" => "conjurinc/conjur-rack"
   }
   
   # Release a gem.
