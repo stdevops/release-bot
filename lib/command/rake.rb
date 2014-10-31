@@ -4,8 +4,9 @@ module Command
       include FileUtils
       
       attr_reader :repo, :dir
-      
-      depends Git::Clone, :repo, lambda {|result|
+      attr_accessor :branch
+            
+      depends Git::Clone, :repo, :branch, lambda {|result|
         @dir = result[2]
       }
       depends Rubygems::Authenticate

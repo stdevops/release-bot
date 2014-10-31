@@ -4,11 +4,13 @@ module Command
       include FileUtils
       
       attr_reader :repo
+      attr_accessor :branch
       
       depends SSH::Authenticate
       
-      def initialize(repo)
+      def initialize(repo, branch = nil)
         @repo = repo
+        @branch = branch
       end
       
       def execute
@@ -21,6 +23,7 @@ module Command
         sh "git clone #{repo} #{dir}"
         result = nil
         cd dir do
+          sh "git checkout #{branch}" if branch
           gem_name = nil
           if gemspec = Dir["*.gemspec"][0]
             gem_name = Object.new.instance_eval(File.read(gemspec)).name

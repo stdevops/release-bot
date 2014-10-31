@@ -36,7 +36,9 @@ class WS < ::Sinatra::Base
     name = param!(:name)
     repo = GEM_REPOS[name] or halt 500, "Gem #{name} not found"
     repo = "git@github.com:#{repo}.git"
-    Command::Rake::Release.new(repo).perform
+    release = Command::Rake::Release.new(repo)
+    release.branch = params[:branch] if params[:branch]
+    release.perform
 
     Configuration.service_api.audit_send params.merge({
       "facility" => "releasebot",

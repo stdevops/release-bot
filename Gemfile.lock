@@ -42,7 +42,7 @@ GIT
 
 GIT
   remote: git://github.com/conjurinc/sqs-job.git
-  revision: 404c9ce637847f0352b34272ae0ab89fb19c0532
+  revision: cb3e407e96abe139102a1bff01a5c61c5edde2e5
   branch: master
   specs:
     sqs-job (1.0.0)

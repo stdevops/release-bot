@@ -8,7 +8,7 @@ describe Release do
     let(:dependencies) { Release.dependencies }
     it "matches" do
       expect(dependencies).to match([
-        [ Command::Git::Clone, Command::Git::Clone, [ :repo, an_instance_of(Proc) ] ],
+        [ Command::Git::Clone, Command::Git::Clone, [ :repo, :branch, an_instance_of(Proc) ] ],
         [ Command::Rubygems::Authenticate, Command::Rubygems::Authenticate, [] ], 
         [ Command::Git::Config, Command::Git::Config, [:dir] ]
       ])
