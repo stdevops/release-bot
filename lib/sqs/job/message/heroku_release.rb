@@ -1,7 +1,7 @@
 module SQS::Job::Message
   class HerokuRelease < Base
     HEROKU_REPOS = [
-      Command::Heroku::App.new("developer-www-conjur", "git@github.com:conjurinc/developer-www.git", "rails", "deploy.sh"),
+      Command::Heroku::App.new("developer-www-conjur", "git@github.com:conjurinc/developer-www.git", "master", "deploy.sh"),
       Command::Heroku::App.new("trialfactory-conjur", "git@github.com:conjurinc/trial-factory.git")
     ].inject({}){|memo,app| memo[app.name] = app; memo}
     
