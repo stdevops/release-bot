@@ -10,12 +10,22 @@ policy "release-bot-1.1" do
     variable("aws/secret_access_key")
   ]
   
+  npm_managers   = role "client", "npm-managers"
+  npm_publishers = role "client", "npm-publishers"
+
+  npm_publishers.grant_to npm_managers
+    
   gem_managers   = role "client", "gem-managers"
   gem_publishers = role "client", "gem-publishers"
 
   heroku_publishers = role "client", "heroku-publishers"
   
   gem_publishers.grant_to gem_managers
+  
+  resource "webservice", "npm" do
+    permit "create", npm_publishers
+    permit "delete", npm_managers
+  end
   
   resource "webservice", "rubygems" do
     permit "create", gem_publishers

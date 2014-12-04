@@ -13,6 +13,10 @@ class WS < ::Sinatra::Base
     end
   end
   
+  NPM_REPOS = {
+    "conjur-api" => "conjurinc/api-node",
+  }
+  
   GEM_REPOS = {
     "conjur-api" => "conjurinc/api-ruby",
     "conjur-cli" => "conjurinc/cli-ruby",
@@ -23,6 +27,36 @@ class WS < ::Sinatra::Base
     "slosilo" => "conjurinc/slosilo",
     "conjur-rack" => "conjurinc/conjur-rack"
   }
+  
+  # Release an NPM package.
+  # +create+ permission is required on 'npm'.
+  #
+  # Request parameters:
+  #
+  # +name+ package name, which must be found in NPM_REPOS whitelist
+  post '/npm/releases' do
+    authorize! "npm", :create
+
+    name = param!(:name)
+    repo = NPM_REPOS[name] or halt 500, "Gem #{name} not found"
+    repo = "git@github.com:#{repo}.git"
+    publish = Command::NPM::Publish.new(repo)
+    publish.branch = params[:branch] if params[:branch]
+    publish.perform
+
+    Configuration.service_api.audit_send params.merge({
+      "facility" => "releasebot",
+      "action" => "npm/releases",
+      "package_name" => name,
+      "repo" => repo,
+      "client" => conjur_client_api.current_role.roleid,
+      "resources" => [ Configuration.service_resourceid("npm") ],
+      "roles" => [ conjur_client_api.current_role.roleid ],
+      "remote_ip" => request.ip
+    })
+
+    status 201
+  end
   
   # Release a gem.
   # +create+ permission is required on 'rubygems'.
