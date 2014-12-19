@@ -38,7 +38,7 @@ class WS < ::Sinatra::Base
     authorize! "npm", :create
 
     name = param!(:name)
-    repo = NPM_REPOS[name] or halt 500, "Gem #{name} not found"
+    repo = NPM_REPOS[name] or halt 500, "Node package #{name} not found"
     repo = "git@github.com:#{repo}.git"
     publish = Command::NPM::Publish.new(repo)
     publish.branch = params[:branch] if params[:branch]
