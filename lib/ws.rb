@@ -23,6 +23,7 @@ class WS < ::Sinatra::Base
     "conjur-asset-ui" => "conjurinc/conjur-asset-ui",
     "conjur-asset-audit-send" => "conjurinc/conjur-asset-audit-send",
     "conjur-asset-host-factory" => "conjurinc/conjur-asset-host-factory",
+    "conjur-asset-aws" => "conjurinc/conjur-asset-aws",
     "conjur-asset-proxy" => "conjurinc/conjur-asset-proxy",
     "slosilo" => "conjurinc/slosilo",
     "conjur-rack" => "conjurinc/conjur-rack"

@@ -1,0 +1,9 @@
+{
+  "id": "opendns/docker/env-demo",
+  "userid": "kgilpin",
+  "created_at": "2014-12-10T22:26:39Z",
+  "ownerid": "conjurops:user:kgilpin",
+  "roleid": "conjurops:host:opendns/docker/env-demo",
+  "resource_identifier": "conjurops:host:opendns/docker/env-demo",
+  "api_key": "6ztmjf3qb6c7v1y6pndg1ezy8011egke89720zjw2y1ck7m3rg3pbj"
+}
