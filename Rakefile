@@ -2,6 +2,8 @@ $LOAD_PATH.unshift 'lib'
 
 desc 'Runs the SQS job worker'
 task :work do
+  File.umask(0)
+  
   require 'conjur'
   require 'releasebot'
   require 'aws-sdk'
