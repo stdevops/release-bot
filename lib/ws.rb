@@ -26,7 +26,8 @@ class WS < ::Sinatra::Base
     "conjur-asset-aws" => "conjurinc/conjur-asset-aws",
     "conjur-asset-proxy" => "conjurinc/conjur-asset-proxy",
     "slosilo" => "conjurinc/slosilo",
-    "conjur-rack" => "conjurinc/conjur-rack"
+    "conjur-rack" => "conjurinc/conjur-rack",
+    "buncker" => "conjurinc/buncker"
   }
   
   # Release an NPM package.
