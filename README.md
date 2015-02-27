@@ -46,6 +46,7 @@ $ conjur audit resource -s webservice:production/release-bot-1.0/rubygems
 ```
 $ CONJURRC=~/accounts/conjurops/.conjurrc conjur env run -c app.secrets -- env CONJUR_POLICY_ID=kgilpin@spudling.local/release-bot-1.1 rackup
 $ CONJURRC=~/accounts/conjurops/.conjurrc conjur env run -c app.secrets -- env CONJUR_POLICY_ID=kgilpin@spudling.local/release-bot-1.1 rake work
+```
 
 # Client Usage
 
