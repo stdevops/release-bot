@@ -7,7 +7,9 @@ require 'conjur'
 require 'releasebot'
 
 Configuration.initialize!
-
+require 'raven'
 require 'ws'
+
+use Raven::Rack
 
 run WS

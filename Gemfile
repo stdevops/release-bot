@@ -13,6 +13,7 @@ gem 'net-ssh'
 gem 'puma'
 gem 'netrc'
 gem 'heroku'
+gem 'sentry-raven', '~> 0.12.3'
 
 group :test, :development do
   gem 'rspec'
