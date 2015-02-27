@@ -1,29 +1,4 @@
 GIT
-  remote: git://github.com/conjurinc/api-ruby.git
-  revision: 1d0568b12b6f93c70f459c8f2747d4d051fda2c0
-  branch: master
-  specs:
-    conjur-api (4.10.2)
-      activesupport
-      rest-client (= 1.6.7)
-      wrong
-
-GIT
-  remote: git://github.com/conjurinc/cli-ruby.git
-  revision: eedfbfe9407ed35736717cd766e5c9278b0aeb2d
-  branch: master
-  specs:
-    conjur-cli (4.17.0)
-      activesupport
-      cas_rest_client
-      conjur-api (>= 4.10.0)
-      deep_merge
-      gli (>= 2.8.0)
-      highline
-      methadone
-      netrc
-
-GIT
   remote: git://github.com/conjurinc/conjur-asset-audit-send.git
   revision: 3b082b24185de12ec5b767ffe60c01f2db7d1b05
   branch: master
@@ -32,10 +7,10 @@ GIT
 
 GIT
   remote: git://github.com/conjurinc/conjur-sinatra.git
-  revision: 3d807ee1eba32f57d64e34d801a43c0c9459ed17
+  revision: 068f9f9f09f4fb5fc801282efffb9b176b864177
   branch: master
   specs:
-    conjur-sinatra (0.1.0)
+    conjur-sinatra (0.2.0)
       rack-test
       rspec
       sinatra
@@ -54,18 +29,22 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.1.8)
-      i18n (~> 0.6, >= 0.6.9)
+    activesupport (4.2.0)
+      i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
-      thread_safe (~> 0.1)
+      thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.3.6)
-    aws-sdk (1.59.1)
-      aws-sdk-v1 (= 1.59.1)
-    aws-sdk-v1 (1.59.1)
-      json (~> 1.4)
-      nokogiri (>= 1.4.4)
+    addressable (2.3.7)
+    aws-sdk (2.0.28)
+      aws-sdk-resources (= 2.0.28)
+    aws-sdk-core (2.0.28)
+      builder (~> 3.0)
+      jmespath (~> 1.0)
+      multi_json (~> 1.0)
+      multi_xml (~> 0.5)
+    aws-sdk-resources (2.0.28)
+      aws-sdk-core (= 2.0.28)
     builder (3.2.2)
     cas_rest_client (1.3)
       rest-client (>= 1.4.2)
@@ -75,83 +54,95 @@ GEM
       ci_reporter (~> 2.0)
       rspec (>= 2.14, < 4)
     coderay (1.1.0)
+    conjur-api (4.13.0)
+      activesupport
+      rest-client (= 1.6.7)
     conjur-asset-ui (1.4.2)
       conjur-api (>= 4.10.2)
       launchy
       puma
       rack
       rack-streaming-proxy (= 2.0.1)
+    conjur-cli (4.20.1)
+      activesupport
+      cas_rest_client
+      conjur-api (~> 4.13.0)
+      deep_merge
+      gli (>= 2.8.0)
+      highline
+      methadone
+      netrc (~> 0.10.2)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     deep_merge (1.0.1)
     diff-lcs (1.2.5)
-    gli (2.12.2)
-    heroku (2.21.2)
+    excon (0.44.3)
+    gli (2.12.3)
+    heroku (3.27.2)
+      heroku-api (~> 0.3.19)
       launchy (>= 0.3.2)
-      rest-client (~> 1.6.1)
-      rubyzip
-      term-ansicolor (~> 1.0.5)
-    highline (1.6.21)
-    i18n (0.6.11)
-    json (1.8.1)
+      multi_json (~> 1.10.1)
+      netrc (>= 0.10.0)
+      rest-client (= 1.6.7)
+      rubyzip (= 0.9.9)
+    heroku-api (0.3.22)
+      excon (~> 0.38)
+      multi_json (~> 1.8)
+    highline (1.7.1)
+    i18n (0.7.0)
+    jmespath (1.0.2)
+      multi_json (~> 1.0)
+    json (1.8.2)
     launchy (2.4.3)
       addressable (~> 2.3)
-    methadone (1.8.0)
+    methadone (1.9.0)
       bundler
     method_source (0.8.2)
     mime-types (2.4.3)
-    mini_portile (0.6.1)
-    minitest (5.4.3)
-    net-ssh (2.9.1)
-    netrc (0.9.0)
-    nokogiri (1.6.5)
-      mini_portile (~> 0.6.0)
-    predicated (0.2.6)
+    minitest (5.5.1)
+    multi_json (1.10.1)
+    multi_xml (0.5.5)
+    net-ssh (2.9.2)
+    netrc (0.10.3)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    puma (2.10.2)
+    puma (2.11.1)
       rack (>= 1.1, < 2.0)
-    rack (1.5.2)
+    rack (1.6.0)
     rack-protection (1.5.3)
       rack
     rack-streaming-proxy (2.0.1)
       rack (>= 1.4)
       servolux (~> 0.10)
-    rack-test (0.6.2)
+    rack-test (0.6.3)
       rack (>= 1.0)
     rake (10.4.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    rspec (3.1.0)
-      rspec-core (~> 3.1.0)
-      rspec-expectations (~> 3.1.0)
-      rspec-mocks (~> 3.1.0)
-    rspec-core (3.1.7)
-      rspec-support (~> 3.1.0)
-    rspec-expectations (3.1.2)
+    rspec (3.2.0)
+      rspec-core (~> 3.2.0)
+      rspec-expectations (~> 3.2.0)
+      rspec-mocks (~> 3.2.0)
+    rspec-core (3.2.1)
+      rspec-support (~> 3.2.0)
+    rspec-expectations (3.2.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.1.0)
-    rspec-mocks (3.1.3)
-      rspec-support (~> 3.1.0)
-    rspec-support (3.1.2)
-    ruby2ruby (2.1.3)
-      ruby_parser (~> 3.1)
-      sexp_processor (~> 4.0)
-    ruby_parser (3.6.3)
-      sexp_processor (~> 4.1)
-    rubyzip (1.1.6)
+      rspec-support (~> 3.2.0)
+    rspec-mocks (3.2.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.2.0)
+    rspec-support (3.2.2)
+    rubyzip (0.9.9)
     safe_yaml (1.0.4)
     servolux (0.10.0)
-    sexp_processor (4.4.4)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
     slop (3.6.0)
     slosilo (2.0.0)
-    term-ansicolor (1.0.7)
     thread_safe (0.3.4)
     tilt (1.4.1)
     tzinfo (1.2.2)
@@ -160,12 +151,6 @@ GEM
     webmock (1.20.4)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
-    wrong (0.7.1)
-      diff-lcs (~> 1.2.5)
-      predicated (~> 0.2.6)
-      ruby2ruby (>= 2.0.1)
-      ruby_parser (>= 3.0.1)
-      sexp_processor (>= 4.0)
     yard (0.8.7.6)
 
 PLATFORMS
@@ -174,10 +159,10 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   ci_reporter_rspec
-  conjur-api!
+  conjur-api (~> 4.13.0)
   conjur-asset-audit-send!
   conjur-asset-ui
-  conjur-cli!
+  conjur-cli (~> 4.20.1)
   conjur-sinatra!
   heroku
   net-ssh
