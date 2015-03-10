@@ -32,7 +32,7 @@ module Secrets
   def load_secrets
     unless @env_keys
       require 'yaml'
-      require 'conjur/cli'
+      require 'conjur/conjurenv'
       
       YAML.add_tag("!var", Conjur::Env::ConjurVariable)
       YAML.add_tag("!tmp", Conjur::Env::ConjurTempfile)
