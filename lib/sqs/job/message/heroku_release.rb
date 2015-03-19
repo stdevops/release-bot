@@ -23,8 +23,7 @@ module SQS::Job::Message
         "repo" => app.repo,
         "client" => client_roleid,
         "resources" => [ Configuration.service_resourceid("heroku") ],
-        "roles" => [ client_roleid ],
-        "remote_ip" => request.ip
+        "roles" => [ client_roleid ]
       })
     end
   end
