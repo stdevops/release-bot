@@ -1,3 +1,0 @@
-heroku stack:set cedar-14
-Grant publishers role to Jenkins
-Load the secrets in
