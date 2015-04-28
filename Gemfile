@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
 gem 'rake'
-gem 'conjur-api', '~> 4.13.0'
+gem 'conjur-api', '~> 4.13'
 gem 'conjur-sinatra', github: 'conjurinc/conjur-sinatra', branch: 'master'
 gem 'activesupport'
 gem 'sinatra'
-gem 'conjur-cli', '~> 4.20.1'
+gem 'conjur-cli', '~> 4.20', github: 'conjurinc/cli-ruby', branch: 'master'
 gem 'conjur-asset-audit-send', github: 'conjurinc/conjur-asset-audit-send', branch: 'master'
 gem 'sqs-job', github: 'conjurinc/sqs-job', branch: 'master'
 gem 'aws-sdk', '< 2'

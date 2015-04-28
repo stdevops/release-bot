@@ -24,10 +24,10 @@ Like all our access-controlled web services, ReleaseBot is protected by a
 
 Access to ReleaseBot is given by granting specific roles:
 
-* **[policy]/gem-managers** publish and yank gems
-* **[policy]/gem-publishers** publish gems
+* **[policy]/publishers** publish
+* **[policy]/managers** yank (plus `publishers` privileges)
 
-Jenkins is a `gem-publisher` and may get additional permissions in the future.
+Jenkins is a `publisher` and may get additional permissions in the future.
 
 # Audit
 
@@ -41,11 +41,29 @@ $ conjur audit resource -s webservice:production/release-bot-1.0/rubygems
 [2014-10-07 15:27:25 UTC] conjurops:host:heroku/releasebot-conjur reported releasebot:release
 ```
 
+# Security Configuration
+
+Load the policy:
+
+```
+$ CONJURAPI_LOG=stderr conjur policy load \
+  -c policy-sandbox.json policy.rb
+```
+
+Populate the secrets:
+
+```
+$ conjur env run -c ~/aws-dev-root.secrets -- \
+  env POLICY_FILE=policy-sandbox.json bundle exec rake provision
+```
+
 # Running the service
 
 ```
-$ CONJURRC=~/accounts/conjurops/.conjurrc conjur env run -c app.secrets -- env CONJUR_POLICY_ID=kgilpin@spudling.local/release-bot-1.1 rackup
-$ CONJURRC=~/accounts/conjurops/.conjurrc conjur env run -c app.secrets -- env CONJUR_POLICY_ID=kgilpin@spudling.local/release-bot-1.1 rake work
+$ conjur env run -c app.secrets -- \
+  env CONJUR_POLICY_ID=kgilpin@spudling.local/release-bot-2.0 rackup
+$ conjur env run -c app.secrets -- \
+  env CONJUR_POLICY_ID=kgilpin@spudling.local/release-bot-2.0 rake work
 ```
 
 # Client Usage

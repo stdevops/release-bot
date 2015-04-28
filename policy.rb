@@ -1,7 +1,8 @@
 $LOAD_PATH.unshift 'lib'
 require 'releasebot'
 
-policy "release-bot-1.1" do
+# Version 2.0 uses Conjur Buildpack for SDF
+policy "release-bot-2.0" do
   
   public_key, private_key = create_signing_key_variables 'jobs'
 
@@ -10,30 +11,14 @@ policy "release-bot-1.1" do
     variable("aws/secret_access_key")
   ]
   
-  npm_managers   = role "client", "npm-managers"
-  npm_publishers = role "client", "npm-publishers"
+  publishers = role "client", "publishers"
+  managers   = role "client", "managers"
 
-  npm_publishers.grant_to npm_managers
-    
-  gem_managers   = role "client", "gem-managers"
-  gem_publishers = role "client", "gem-publishers"
-
-  heroku_publishers = role "client", "heroku-publishers"
+  publishers.grant_to managers
   
-  gem_publishers.grant_to gem_managers
-  
-  resource "webservice", "npm" do
-    permit "create", npm_publishers
-    permit "delete", npm_managers
-  end
-  
-  resource "webservice", "rubygems" do
-    permit "create", gem_publishers
-    permit "delete", gem_managers
-  end
-  
-  resource "webservice", "heroku" do
-    permit "create", heroku_publishers
+  resource "sdf", "gatekeeper" do
+    permit "execute", publishers
+    permit "update",  managers
   end
   
   layer "service" do
