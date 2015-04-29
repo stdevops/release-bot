@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rake'
-gem 'conjur-api', '~> 4.13'
+gem 'conjur-api', '~> 4.13', github: 'conjurinc/api-ruby', branch: 'master'
 gem 'conjur-sinatra', github: 'conjurinc/conjur-sinatra', branch: 'master'
 gem 'activesupport'
 gem 'sinatra'

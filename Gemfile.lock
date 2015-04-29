@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/conjurinc/api-ruby.git
+  revision: dff91c0be8fef3f0f7ff8bf3f849b45ca4938c0c
+  branch: master
+  specs:
+    conjur-api (4.16.0)
+      activesupport
+      rest-client (~> 1.7, >= 1.7.3)
+
+GIT
   remote: git://github.com/conjurinc/cli-ruby.git
   revision: aa95d54d81f03b76d1394958eb5dfc1968f216e3
   branch: master
@@ -66,9 +75,6 @@ GEM
       ci_reporter (~> 2.0)
       rspec (>= 2.14, < 4)
     coderay (1.1.0)
-    conjur-api (4.16.0)
-      activesupport
-      rest-client (~> 1.7, >= 1.7.3)
     conjur-asset-ui (1.4.2)
       conjur-api (>= 4.10.2)
       launchy
@@ -184,7 +190,7 @@ DEPENDENCIES
   activesupport
   aws-sdk (< 2)
   ci_reporter_rspec
-  conjur-api (~> 4.13)
+  conjur-api (~> 4.13)!
   conjur-asset-audit-send!
   conjur-asset-ui
   conjur-cli (~> 4.20)!
