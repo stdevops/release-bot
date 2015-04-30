@@ -11,17 +11,22 @@ policy "release-bot-2.0" do
     variable("aws/secret_access_key")
   ]
   
-  publishers = role "client", "publishers"
-  managers   = role "client", "managers"
+  observer  = role "webservice-client", "observer"
+  publisher = role "webservice-client", "publisher"
+  manager   = role "webservice-client", "manager"
 
-  publishers.grant_to managers
+  # Publishers can observe
+  observer.grant_to  publisher
+  # Managers can publish
+  publisher.grant_to manager
   
-  resource "sdf", "gatekeeper" do
-    permit "execute", publishers
-    permit "update",  managers
+  resource "webservice" do
+    permit "read",    observer
+    permit "create",  publisher
+    permit "update",  manager
   end
   
-  layer "service" do
+  layer do
     Secrets.variable_ids.each do |var|
       can "execute", variable([ "", var ].join('/'))
     end

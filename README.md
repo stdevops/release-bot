@@ -22,12 +22,13 @@ runs as a specific host identity, with layer membership granting it the access i
 Like all our access-controlled web services, ReleaseBot is protected by a 
 [Conjur policy](https://github.com/conjurinc/release-bot/blob/master/policy.rb).
 
-Access to ReleaseBot is given by granting specific roles:
+Access to ReleaseBot is given by granting specific roles. Each role includes the privileges of the previously listed roles:
 
-* **[policy]/publishers** publish
-* **[policy]/managers** yank (plus `publishers` privileges)
+* **[policy]/observers** read-only access
+* **[policy]/publishers** publish new releases
+* **[policy]/managers** yank
 
-Jenkins is a `publisher` and may get additional permissions in the future.
+Jenkins is a `publisher`.
 
 # Audit
 

@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: git://github.com/conjurinc/cli-ruby.git
-  revision: aa95d54d81f03b76d1394958eb5dfc1968f216e3
+  revision: 9f12de66dfd1b91eb19e7c38d6c264e25b341e27
   branch: master
   specs:
     conjur-cli (4.22.0)
