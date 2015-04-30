@@ -4,7 +4,8 @@ module SQS::Job::Message
       Command::Heroku::App.new("developer-www-conjur", "git@github.com:conjurinc/developer-www.git", "master", "deploy.sh"),
       Command::Heroku::App.new("developer-www-ci-conjur", "git@github.com:conjurinc/developer-www.git", "master", "deploy.sh"),
       Command::Heroku::App.new("trialfactory-conjur", "git@github.com:conjurinc/trial-factory.git"),
-      Command::Heroku::App.new("demo-factory-conjur", "git@github.com:conjurinc/demo-factory.git")
+      Command::Heroku::App.new("demo-factory-conjur", "git@github.com:conjurinc/demo-factory.git"),
+      Command::Heroku::App.new("www-conjur", "git@github.com:conjurinc/conjur-www.git"),
     ].inject({}){|memo,app| memo[app.name] = app; memo}
     
     validates_presence_of :name, :client_roleid
