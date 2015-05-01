@@ -7,12 +7,6 @@ class WS < ::Sinatra::Base
 
   enable :dump_errors, :raise_errors
   
-  helpers do
-    def authorize! service, privilege
-      conjur_client_api.current_role.permitted?(Configuration.service_resourceid(service), privilege) or halt(403, "Unauthorized")
-    end
-  end
-  
   NPM_REPOS = {
     "conjur-api" => "conjurinc/api-node",
   }
@@ -37,8 +31,6 @@ class WS < ::Sinatra::Base
   #
   # +name+ package name, which must be found in NPM_REPOS whitelist
   post '/npm/releases' do
-    authorize! "npm", :create
-
     name = param!(:name)
     repo = NPM_REPOS[name] or halt 500, "Node package #{name} not found"
     repo = "git@github.com:#{repo}.git"
@@ -67,8 +59,6 @@ class WS < ::Sinatra::Base
   #
   # +name+ gem name, which must be found in GEM_REPOS whitelist
   post '/rubygems/releases' do
-    authorize! "rubygems", :create
-
     name = param!(:name)
     repo = GEM_REPOS[name] or halt 500, "Gem #{name} not found"
     repo = "git@github.com:#{repo}.git"
@@ -95,8 +85,6 @@ class WS < ::Sinatra::Base
   #
   # In addition to the gem name, a +version+ parameter is required.
   delete '/rubygems/releases/:name' do
-    authorize! "rubygems", :delete
-
     name = params[:name]
     version = param! :version
     repo = GEM_REPOS[name] or halt 500, "Gem #{name} not found"
@@ -125,8 +113,6 @@ class WS < ::Sinatra::Base
   #
   # +name+ gem name, which must be found in GEM_REPOS whitelist
   post '/heroku/releases' do
-    authorize! "heroku", :create
-    
     require 'sqs/job/message/heroku_release'
   
     name = param!(:name)
