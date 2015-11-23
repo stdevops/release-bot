@@ -6,6 +6,7 @@ module SQS::Job::Message
       Command::Heroku::App.new("trialfactory-conjur", "git@github.com:conjurinc/trial-factory.git"),
       Command::Heroku::App.new("demo-factory-conjur", "git@github.com:conjurinc/demo-factory.git"),
       Command::Heroku::App.new("www-conjur", "git@github.com:conjurinc/conjur-www.git"),
+      Command::Heroku::App.new("tenfactorci-conjur", "git@github.com:conjurinc/tenfactorci.git"),
     ].inject({}){|memo,app| memo[app.name] = app; memo}
     
     validates_presence_of :name, :client_roleid
