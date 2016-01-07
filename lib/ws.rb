@@ -23,6 +23,7 @@ class WS < ::Sinatra::Base
     "slosilo" => "conjurinc/slosilo",
     "conjur-rack" => "conjurinc/conjur-rack",
     "conjur-debify" => "conjurinc/debify",
+    "conjur-rack-heartbeat" => "conjurinc/conjur-rack-heartbeat",
     "buncker" => "conjurinc/buncker"
   }
   
