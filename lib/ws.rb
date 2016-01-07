@@ -22,6 +22,7 @@ class WS < ::Sinatra::Base
     "conjur-asset-proxy" => "conjurinc/conjur-asset-proxy",
     "slosilo" => "conjurinc/slosilo",
     "conjur-rack" => "conjurinc/conjur-rack",
+    "conjur-debify" => "conjurinc/debify",
     "buncker" => "conjurinc/buncker"
   }
   
