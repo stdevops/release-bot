@@ -20,6 +20,7 @@ class WS < ::Sinatra::Base
     "conjur-asset-host-factory" => "conjurinc/conjur-asset-host-factory",
     "conjur-asset-aws" => "conjurinc/conjur-asset-aws",
     "conjur-asset-proxy" => "conjurinc/conjur-asset-proxy",
+    "conjur-asset-policy-loader" => "conjurinc/conjur-asset-policy-loader",
     "slosilo" => "conjurinc/slosilo",
     "conjur-rack" => "conjurinc/conjur-rack",
     "conjur-debify" => "conjurinc/debify",
