@@ -16,6 +16,7 @@ class WS < ::Sinatra::Base
     "conjur-cli" => "conjurinc/cli-ruby",
     "conjur-asset-ui" => "conjurinc/conjur-asset-ui",
     "conjur-asset-dsl2" => "conjurinc/conjur-asset-dsl2",
+    "conjur-asset-policy" => "conjurinc/conjur-asset-policy",
     "conjur-asset-audit-send" => "conjurinc/conjur-asset-audit-send",
     "conjur-asset-host-factory" => "conjurinc/conjur-asset-host-factory",
     "conjur-asset-aws" => "conjurinc/conjur-asset-aws",
